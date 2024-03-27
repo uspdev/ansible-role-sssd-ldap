@@ -14,7 +14,10 @@
 
 - name: realm join
   expect:
-    command: realm join "{{ sssd_ad_realm }}" -U "{{ sssd_ad_admin_user }}"%"{{ sssd_ad_admin_password }}" --do-not-touch-config
+    command: realm join "{{ sssd_ad_realm|upper }}" -U "{{ sssd_ad_admin_user }}" --do-not-touch-config
+    responses:
+      Password for *: "{{ sssd_ad_admin_password }}"
+      Senha para *: "{{ sssd_ad_admin_password }}"
     creates: /etc/krb5.keytab
 
 - name: configura krb5.conf

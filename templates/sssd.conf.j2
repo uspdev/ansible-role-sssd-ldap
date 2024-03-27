@@ -1,5 +1,5 @@
 [sssd]
-domains = {{ ssshd_ad_realm }}
+domains = {{ sssd_ad_realm }}
 config_file_version = 2
 services = nss, pam
 
@@ -10,7 +10,7 @@ cache_credentials = True
 krb5_realm = {{ sssd_ad_realm|upper }}
 realmd_tags = manages-system joined-with-adcli 
 id_provider = ad
-fallback_homedir = /home/%u@%d
+fallback_homedir = /home/%u
 ad_domain = {{ sssd_ad_realm }}
 use_fully_qualified_names = False
 ldap_id_mapping = True
