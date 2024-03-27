@@ -1,0 +1,30 @@
+- name: pacotes auth
+  apt:
+    update_cache: yes
+    pkg:
+      - realmd
+      - sssd-tools
+      - sssd
+      - libnss-sss
+      - libpam-sss
+      - adcli
+      - packagekit
+      - krb5-user
+      - python3-pexpect
+
+- name: realm join
+  expect:
+    command: realm join "{{ sssd_ad_realm }}" -U "{{ sssd_ad_admin_user }}"%"{{ sssd_ad_admin_password }}" --do-not-touch-config
+    creates: /etc/krb5.keytab
+
+- name: configura krb5.conf
+  template:
+    src: krb5.conf.j2
+    dest: /etc/krb5.conf
+
+- name: configura sssd
+  template:
+    src: sssd.conf.j2
+    dest: /etc/sssd/sssd.conf
+    mode: 0600
+  notify: reinicia sssd

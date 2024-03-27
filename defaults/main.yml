@@ -1,0 +1,3 @@
+sssd_ad_realm: "smbdomain.local.br"
+sssd_ad_admin_password: 'proalunoSenh@1'
+sssd_ad_admin_user: 'Administrator'
