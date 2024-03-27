@@ -1,0 +1,18 @@
+galaxy_info:
+  author: sybgroff
+  description: configure sssd to join AD DC
+  company: USPdev
+  role_name: sssd_ad
+  
+  license: "license (BSD, MIT)"
+
+  min_ansible_version: 2.2
+
+  platforms:
+   - name: Ubuntu
+     versions:
+     - bionic
+  galaxy_tags:
+    - samba
+
+dependencies: []
