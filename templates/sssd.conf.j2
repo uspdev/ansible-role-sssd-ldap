@@ -16,7 +16,7 @@ use_fully_qualified_names = False
 ldap_id_mapping = {{ sssd_ldap_id_mapping }}
 access_provider = ad
 
-{% if sssd_ldap_user_name %}
-sssd_ldap_user_name_uid=uid
-{% else %}
+{% if sssd_ldap_user_name_uid %}
+sssd_ldap_user_name = uid
+{% endif %}
 
