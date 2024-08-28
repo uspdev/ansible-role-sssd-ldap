@@ -15,8 +15,8 @@ ad_domain = {{ sssd_ad_realm }}
 use_fully_qualified_names = False
 ldap_id_mapping = {{ sssd_ldap_id_mapping }}
 access_provider = ad
+enumerate = {{ sssd_enumerate }}
 
 {% if sssd_ldap_user_name_uid %}
-sssd_ldap_user_name = uid
+ldap_user_name = uid
 {% endif %}
-
