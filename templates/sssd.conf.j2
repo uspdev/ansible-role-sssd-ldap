@@ -13,5 +13,10 @@ id_provider = ad
 fallback_homedir = /home/%u
 ad_domain = {{ sssd_ad_realm }}
 use_fully_qualified_names = False
-ldap_id_mapping = True
+ldap_id_mapping = {{ sssd_ldap_id_mapping }}
 access_provider = ad
+
+{% if sssd_ldap_user_name %}
+sssd_ldap_user_name_uid=uid
+{% else %}
+
