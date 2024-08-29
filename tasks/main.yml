@@ -1,24 +1,9 @@
-- name: pacotes auth
+- name: pacotes
   apt:
     update_cache: yes
     pkg:
-      - realmd
-      - sssd-tools
       - sssd
-      - libnss-sss
-      - libpam-sss
-      - adcli
-      - packagekit
       - krb5-user
-      - python3-pexpect
-
-- name: realm join
-  expect:
-    command: realm join "{{ sssd_ad_realm|upper }}" -U "{{ sssd_ad_admin_user }}" --do-not-touch-config
-    responses:
-      Password for *: "{{ sssd_ad_admin_password }}"
-      Senha para *: "{{ sssd_ad_admin_password }}"
-    creates: /etc/krb5.keytab
 
 - name: configura krb5.conf
   template:
@@ -31,3 +16,15 @@
     dest: /etc/sssd/sssd.conf
     mode: 0600
   notify: reinicia sssd
+
+#- name: home directory
+#  lineinfile:
+#    path: /etc/pam.d/common-session
+#    line: 'session    required    pam_mkhomedir.so skel=/etc/skel/ umask=0077'
+
+# passar para outra role
+- name: pam mkhomedir
+  lineinfile:
+    path: /etc/pam.d/common-session
+    line: session optional pam_mkhomedir.so
+

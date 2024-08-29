@@ -1,22 +1,31 @@
 [sssd]
-domains = {{ sssd_ad_realm }}
+domains = {{ sssd_ldap_realm }}
 config_file_version = 2
 services = nss, pam
 
-[domain/{{ sssd_ad_realm }}]
-default_shell = /bin/bash
-krb5_store_password_if_offline = True
-cache_credentials = True
-krb5_realm = {{ sssd_ad_realm|upper }}
-realmd_tags = manages-system joined-with-adcli 
-id_provider = ad
-fallback_homedir = /home/%u
-ad_domain = {{ sssd_ad_realm }}
-use_fully_qualified_names = False
-ldap_id_mapping = {{ sssd_ldap_id_mapping }}
-access_provider = ad
-enumerate = {{ sssd_enumerate }}
-
-{% if sssd_ldap_user_name_uid %}
+[domain/{{ sssd_ldap_realm }}]
+# conexão
+id_provider = ldap
+ldap_uri = ldap://{{ sssd_ldap_realm }}
+ldap_search_base = {{ sssd_ldap_basedn }}
+# opção importantíssima para usar o samba como LDAP
+ldap_referrals = false
+ 
+# schema
+ldap_id_mapping = false
+ldap_schema = ad
+ 
+# binding
+ldap_id_use_start_tls = true
+ldap_tls_reqcert = allow
+ldap_default_bind_dn = cn={{ sssd_ldap_admin_user }},cn=users,{{ sssd_ldap_basedn }}
+ldap_default_authtok = {{ sssd_ldap_admin_password }}
+ldap_force_upper_case_realm = true
 ldap_user_name = uid
-{% endif %}
+ 
+# kerberos
+auth_provider = krb5
+krb5_realm = {{ sssd_ldap_realm | upper }}
+krb5_server = {{ sssd_ldap_realm }}
+# o sssd reclama se o kpasswd não for explicitamente definido
+krb5_kpasswd = {{ sssd_ldap_realm }}
