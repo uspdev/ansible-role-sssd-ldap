@@ -1,18 +1,18 @@
 galaxy_info:
-  author: sybgroff
-  description: configure sssd to join AD DC
+  author: thiagogomesverissimo
+  description: configure sssd to auth using ldap
   company: USPdev
-  role_name: sssd_ad
+  role_name: sssd_ldap
   
   license: "license (BSD, MIT)"
 
   min_ansible_version: 2.2
 
   platforms:
-   - name: Ubuntu
+   - name: Debian
      versions:
-     - bionic
+     - bookworm
   galaxy_tags:
-    - samba
+    - sssd
 
 dependencies: []
